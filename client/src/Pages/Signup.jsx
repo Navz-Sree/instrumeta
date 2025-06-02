@@ -22,7 +22,7 @@ const Signup = ({ setAuth, setUsername, setRole }) => {
     }
 
     try {
-      const username = email.split('@')[0]; // create username from email
+      const username = email.split('@')[0];
 
       const res = await axios.post('http://localhost:5000/api/register', {
         username,
@@ -30,20 +30,15 @@ const Signup = ({ setAuth, setUsername, setRole }) => {
         password,
       });
 
-      console.log('Backend response:', res.data);
-
-      // If backend returns a user object, use it; otherwise fallback to defaults
       if (res.data && res.data.user) {
         setAuth(true);
         setUsername(res.data.user.username);
         setRole(res.data.user.role);
         navigate('/dashboard');
-      } 
-      // If no user object but registration success message present
-      else if (res.data && res.data.message) {
+      } else if (res.data && res.data.message) {
         setAuth(true);
         setUsername(username);
-        setRole('user');  // default role
+        setRole('user');
         navigate('/dashboard');
       } else {
         alert('Registration failed: Unexpected response from server');
@@ -55,59 +50,70 @@ const Signup = ({ setAuth, setUsername, setRole }) => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6 col-lg-5">
-          <div className="card shadow-lg border-0 rounded-4">
-            <div className="card-body p-4">
-              <h2 className="text-center mb-4 text-primary">Signup</h2>
-              <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label className="form-label">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    placeholder="Enter your email"
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label">Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    placeholder="Enter a password"
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label">Confirm Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                    placeholder="Re-enter the password"
-                  />
-                </div>
-
-                <button type="submit" className="btn btn-primary w-100 shadow-sm">
-                  Create Account
-                </button>
-
-                <Link to="/" className="btn btn-outline-secondary w-100 mt-3">
-                  ⬅ Back to Home
-                </Link>
-              </form>
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ minHeight: '100vh', backgroundColor: '#121212' }}
+    >
+      <div
+        className="card shadow border-0 rounded-4"
+        style={{
+          backgroundColor: '#d0a9f5',
+          width: '100%',
+          maxWidth: '400px',
+          color: '#121212',
+        }}
+      >
+        <div className="card-body p-4">
+          <h2 className="text-center mb-4 fw-bold">Signup</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label className="form-label">Email</label>
+              <input
+                type="email"
+                className="form-control bg-light border-dark"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="Enter your email"
+              />
             </div>
-          </div>
+
+            <div className="mb-3">
+              <label className="form-label">Password</label>
+              <input
+                type="password"
+                className="form-control bg-light border-dark"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Enter a password"
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label">Confirm Password</label>
+              <input
+                type="password"
+                className="form-control bg-light border-dark"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                placeholder="Re-enter the password"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="btn btn-dark w-100 mb-3"
+              style={{ fontWeight: 'bold' }}
+            >
+              Create Account
+            </button>
+
+            <Link to="/" className="btn btn-outline-dark w-100">
+              ⬅ Back to Home
+            </Link>
+          </form>
         </div>
       </div>
     </div>
